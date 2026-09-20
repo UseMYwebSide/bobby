@@ -183,14 +183,12 @@
         </div>
     </header>
 
-    <div class="video-grid" id="finderGrid">
-        <!-- Live Tunnels will generate here automatically -->
-    </div>
+    <div class="video-grid" id="finderGrid"></div>
 
     <script>
         function generateLiveTunnels() {
             const grid = document.getElementById('finderGrid');
-            grid.innerHTML = ''; // Reset grid
+            grid.innerHTML = ''; 
 
             const customTunnels = [
                 {
@@ -234,12 +232,10 @@
             if (type === 'lifesteal') baseQuery = "Minecraft Lifesteal SMP application";
             if (type === 'vanilla') baseQuery = "Minecraft Vanilla SMP recruitment";
             
-            // This parameter (sp=EgIIAg%3D%3D) forces YouTube to sort purely by the upload minute
-            const liveUrl = `https://youtube.com{encodeURIComponent('"' + baseQuery + '"')}&sp=EgIIAg%253D%253D`;
+                        const liveUrl = `https://youtube.com{encodeURIComponent('"' + baseQuery + '"')}&sp=EgIIAg%253D%253D`;
             window.open(liveUrl, '_blank');
         }
 
-        // Run automatically when the site opens
         window.onload = generateLiveTunnels;
     </script>
 </body>
