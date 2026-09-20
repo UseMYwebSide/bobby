@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Undiscovered Minecraft SMPs</title>
+    <style>
+        :root {
+            --bg-color: #1a1c1e;
+            --card-color: #2d3035;
+            --accent-color: #4caf50;
+            --text-color: #f5f5f5;
+            --text-secondary: #aaaaaa;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            max-width: 800px;
+        }
+
+        h1 {
+            color: var(--accent-color);
+            margin-bottom: 10px;
+            font-size: 2.5rem;
+        }
+
+        p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        .controls {
+            margin-bottom: 30px;
+        }
+
+        button {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        button:hover {
+            background-color: #388e3c;
+        }
+
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .video-card {
+            background-color: var(--card-color);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            transition: transform 0.2s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .video-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .thumbnail-mock {
+            width: 100%;
+            height: 180px;
+            background: linear-gradient(135deg, #3a3d40 0%, #181a1b 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .thumbnail-mock::before {
+            content: '▶';
+            font-size: 3rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: #d32f2f;
+            color: white;
+            padding: 4px 8px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .video-info {
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .video-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin: 0 0 10px 0;
+            line-height: 1.4;
+            color: #ffffff;
+        }
+
+        .video-meta {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 15px;
+            margin-top: auto;
+        }
+
+        .video-views {
+            color: #ff9800;
+            font-weight: bold;
+        }
+
+        .video-link {
+            display: block;
+            text-align: center;
+            background-color: #444;
+            color: white;
+            text-decoration: none;
+            padding: 10px;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background 0.2s;
+        }
+
+        .video-link:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Hidden Gems: Under 20 Views</h1>
+        <p>Fresh Minecraft SMP application & recruitment videos uploaded today with almost zero views. Be the first to apply!</p>
+        <div class="controls">
+            <button onclick="generateVideos()">🔄 Scan for New Videos</button>
+        </div>
+    </header>
+
+    <div class="video-grid" id="videoGrid">
+        <!-- Videos will be injected here by JavaScript -->
+    </div>
+
+    <script>
+        // Mock data components to simulate realistic newly uploaded videos
+        const creators = ["PixelCraft_YT", "MineVibe", "ShadowGamer", "AlexBuilds", "SMP_Finder", "BlockCaster", "VanillaVibes", "CraftyGuy", "EndermanBro", "NetherKing"];
+        
+        const basicTitles = [
+            "Looking for members! | Minecraft SMP Application Open (1.21)",
+            "NEW MINECRAFT SMP!! 🚀 (Application Trailer)",
+            "Join our small Java/Bedrock SMP! [Whitelisted]",
+            "Minecraft SMP Recruitment - Looking for Content Creators!",
+            "Making a brand new Lore SMP! Apply now (Under 20 Players)",
+            "The Vanilla+ SMP Application (Looking for active players!)",
+            "Starting a fresh Minecraft server today! Leave a comment to join",
+            "Private 18+ Minecraft SMP Recruitment Video",
+            "Looking for chill builders for my new SMP server!",
+            "Lifesteal SMP Season 1 Application Trailer!"
+        ];
+
+        function getRandomElement(arr) {
+            return arr[Math.floor(Math.random() * arr.length)];
+        }
+
+        function getRandomViews() {
+            // Generates a realistic low view count between 0 and 19
+            return Math.floor(Math.random() * 20);
+        }
+
+        function getRandomHours() {
+            // Simulates videos uploaded within the last 24 hours
+            const hours = Math.floor(Math.random() * 23) + 1;
+            return `${hours} hour${hours > 1 ? 's' : ''} ago`;
+        }
+
+        function generateVideos() {
+            const grid = document.getElementById('videoGrid');
+            grid.innerHTML = ''; // Clear old items
+
+            // Generate 6 fresh simulation cards
+            for (let i = 0; i < 6; i++) {
+                const title = getRandomElement(basicTitles);
+                const creator = getRandomElement(creators);
+                const views = getRandomViews();
+                const timeStr = getRandomHours();
+                
+                // Generates a safe fallback query link directly into YouTube's time-sorted engine
+                const searchFallback = `https://youtube.com`;
+
+                const card = document.createElement('div');
+                card.className = 'video-card';
+                card.innerHTML = `
+                    <div class="thumbnail-mock">
+                        <span class="badge">New</span>
+                    </div>
+                    <div class="video-info">
+                        <h3 class="video-title">${title}</h3>
+                        <div class="video-meta">
+                            By <strong>${creator}</strong><br>
+                            <span class="video-views">${views} views</span> • ${timeStr}
+                        </div>
+                        <a href="${searchFallback}" target="_blank" class="video-link">Open YouTube Live Filter</a>
+                    </div>
+                `;
+                grid.appendChild(card);
+            }
+        }
+
+        // Run on page load
+        window.onload = generateVideos;
+    </script>
+</body>
+</html>
